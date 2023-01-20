@@ -3,12 +3,6 @@ import numpy as np
 
 
 # reflect an existing database into a new model
-Base = automap_base()
-# reflect the tables
-Base.prepare(autoload_with=engine)
-
-# Save reference to the table
-Passenger = Base.classes.test
 
 #################################################
 # Flask Setup
