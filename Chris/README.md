@@ -4,12 +4,6 @@
 
 <hr>
 
-### Quick Links
-- [Project Overview](#overview)
-- [Extract](#extract)
-- [Transform](#transform)
-- [Load](#load)
-
 <br>
 
 # Project Overview
@@ -18,6 +12,11 @@
 - Software: Python, Jupyter Notebook, 
 - Python Libraries: Pandas, 
 - GeoJSON Data
+- Python Flask-powered API, HTML/CSS, JavaScript
+- Database SQL, MongoDB, SQLite, etc
+- JavaScript Libray - Leaflet 
+- Your project should include at least one JS library that we did not cover.
+
 
 <hr>
 
