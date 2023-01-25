@@ -1,4 +1,4 @@
-county_x,state,crime_rate_per_100000,crime_rate_rank,murder,rape,robbery,aggravated_assault,burglary,larceny,motor_theft,arson,population_x,total_violent_crime,household_income_rank,state_name_x,per_capita_income,household_income,family_income,num_of_households,FIPS,lat,lng
+county,state,crime_rate_per_100000,crime_rate_rank,murder,rape,robbery,aggravated_assault,burglary,larceny,motor_theft,arson,population_x,total_violent_crime,household_income_rank,state_name,per_capita_income,household_income,family_income,num_of_households,FIPS,lat,lng
 St. Louis City,MO,1791.995377,1,119,200,1778,3609,4995,13791,3543,464,318416,28499,2729,Missouri,23048,34582,43627,140652,29510,38.6359,-90.2451
 Alexander,IL,1664.700485,3,1,2,5,119,82,184,12,2,7629,407,3096,Illinois,13619,26972,33977,2860,17003,37.1915,-89.3375
 Kenedy,TX,1456.31068,4,0,3,1,2,5,4,4,0,412,19,1677,Texas,15157,43438,59643,159,48261,26.9285,-97.7017
