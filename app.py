@@ -57,6 +57,8 @@ def crime_data():
         crime_income_data["total_violent_crime"] = post[14]
         crime_income_data["household_income_rank"] = post[15]
         crime_income_data["per_capita_income"] = post[17]
+        crime_income_data["household_income"] = post[18]
+        crime_income_data["family_income"] = post[19]
         crime_income_data["num_of_households"] = post[20]
         crime_income_data["lat"] = post[21]
         crime_income_data["lng"] = post[22]
