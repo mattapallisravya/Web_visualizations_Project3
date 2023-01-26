@@ -35,20 +35,6 @@ d3.json(stateGeo).then(data2 => {
   // stateLine.addTo(myMap);
 });
 
-// d3.json(countyGeo).then(data => {
-//   console.log(data)
-//   L.geoJson(data, {
-//       style:coordinates => {
-//           return {
-//               color:"black",
-//               weight:1.5 
-//           }
-//         }
-//     }).addTo(countyLine);
-//     countyLine.addTo(myMap);
-//     });
-
-
 let baseMaps = {
   'Street': street,
   'Topo': topo
