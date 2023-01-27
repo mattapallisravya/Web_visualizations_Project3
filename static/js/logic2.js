@@ -1,7 +1,7 @@
 function init() {
 
     // Creating a promise to read the data I will be using
-        let Promise = d3.json('samples.json');
+        let Promise = d3.csv('samples.json');
     
         console.log('Data Promise:', Promise)
     
@@ -9,7 +9,7 @@ function init() {
         d3.json('samples.json').then(function (data) {
     
             let dropdownMenu = d3.select('#selDataset');
-            let state = data.names;
+            let state = data.state;
             state.forEach((state) => {
                 dropdownMenu.append('option').text(state).property('state', state);        
             });
@@ -24,25 +24,22 @@ function init() {
     }
     
     // Creating a function to change charts upon #selDataset dropdown change
-    function optionChanged(sampleX) {
-        buildRadar(sampleX);
+    function optionChanged(stateX) {
+        buildRadar(stateX);
     }
     
     init();
 
     function buildRadar(state) {
-
-    }
-
-  
-    let config = {
-    type: 'radar',
-    data: data,
-    options: {
-      elements: {
-        line: {
-          borderWidth: 3
-        }
+      let config = {
+        type: 'radar',
+        data: data,
+        options: {
+          elements: {
+            line: {
+              borderWidth: 3
+            }
+          }
+        },
       }
-    },
-  };
+    };
