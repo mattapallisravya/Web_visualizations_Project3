@@ -21,31 +21,47 @@
         .attr("height", height + margin.top + margin.bottom)
       .append("g")
         .attr("transform",
-              "translate(" + margin.left + "," + margin.top + ")");
+          "translate(" + margin.left + "," + margin.top + ")");
     
     //Read the data
     d3.csv("Crime vs Income.csv", function(data) {
     
+      household_income = []
+        for(var i=0; i<data.length; i++){
+	household_income.push(data[i].household_income)
+}
+console.log(household_income)
+
+total_violent_crime = []
+        for(var i=0; i<data.length; i++){
+	total_violent_crime.push(data[i].total_violent_crime)
+}
+console.log(total_violent_crime)
+
       // Add X axis
       var x = d3.scaleLinear()
-        .domain([d3.min(data, function(d){return d.household_income}), 
-        d3.max(data, function(d){return d.household_income;})])
-        .range([ 0, width-spacing]);
+      .domain([10000, 125000])
+        //.domain([d3.min(household_income), 
+        //d3.max(household_income)])
+        .range([0, width]);
       svg.append("g")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x));
     
       // Add Y axis
       var y = d3.scaleLinear()
-        .domain([d3.min(data, function(d){return d.total_violent_crime}), 
-        d3.max(data, function(d){return d.total_violent_crime;})])
-        .range([ height-spacing, 0]);
+      .domain([0, 2500])
+        //.domain([d3.min(total_violent_crime), 
+        //d3.max(total_violent_crime)])
+        .range([height, 0]);
+      svg.append("g")
+        .call(d3.axisLeft(y));
 
-      var xAxis = d3.axisBottom(xScale);
-      var yAxis = d3.axisBottom(yScale);
+      var xAxis = d3.axisBottom(data.household_income);
+      var yAxis = d3.axisLeft(data.total_violent_crime);
   
-      svg.append("g").call(xAxis);
-      svg.append("g").call(yAxis);
+      //svg.append("g").call(xAxis);
+      //svg.append("g").call(yAxis);
 
     
       // Add a tooltip div. Here I define the general feature of the tooltip: stuff that do not depend on the data point.
@@ -87,11 +103,11 @@
       // Add dots
       svg.append('g')
         .selectAll("dot")
-        .data(data.filter(function(d,i){return i<50})) // the .filter part is just to keep a few dots on the chart, not all of them
+        .data(data) // the .filter part is just to keep a few dots on the chart, not all of them
         .enter()
         .append("circle")
-          .attr("cx", function (d) { return d.household_income;})
-          .attr("cy", function (d) { return d.total_violent_crime;})
+          .attr("cx", function (d) { return x(d.household_income);})
+          .attr("cy", function (d) { return y(d.total_violent_crime);})
           .attr("r", 7)
           .style("fill", "blue")
           .style("opacity", 0.3)
@@ -99,7 +115,8 @@
         .on("mouseover", mouseover )
         .on("mousemove", mousemove )
         .on("mouseleave", mouseleave )
-    
-    })
+        console.log(data[0].household_income)
+        console.log(x(data[0].household_income))
+       })
     
     </script>
