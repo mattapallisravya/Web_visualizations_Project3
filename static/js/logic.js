@@ -1,6 +1,6 @@
 // Store our API endpoint as queryUrl.
 const api_url = "https://web-visualization-project.onrender.com/crime_data";
-// getData();
+getData();
 // Creating the map object
 let countyLine= L.layerGroup();
 
@@ -40,49 +40,34 @@ d3.json(stateGeo).then(data2 => {
 
 
 
-// async function getData () {
-//   let mygeojson = {"type": "FeatureCollection", "features": []}
-//   await fetch(api_url)
-//  .then(response => response.json())
-//  .then(data => {
-//    for(let point of data){
-//      let coordinate = [parseFloat(point.lng), parseFloat(point.lat)];
-//      let properties = point;
-//      delete properties.longitude;
-//      delete properties.latitude;          
-//      let feature = {"type": "Feature", "geometry": {"type": "Point", "coordinates": coordinate}, "properties": properties}
-//      mygeojson.features.push(feature);
-//    }
-//  })
-//  L.geoJson(mygeojson).addTo(myMap);
-// //  console.log(mygeojson);
-// }
-d3.json(api_url).then(function(data) {
-  console.log(api_url)
-  // Create a new choropleth layer.
-  geojson = L.choropleth(data, {
-    // Define which property in the features to use.
-    valueProperty: "crime_rate_per_100000",
-    // Set the color scale.
-    scale: ["#FFFFB2", "#B10026"],
-    // The number of breaks in the step range
-    steps: 10,
-    // q for quartile, e for equidistant, k for k-means
-    mode: "q",
-    style: {
-      // Border color
-      color: "#fff",
-      weight: 1,
-      fillOpacity: 0.8
-    },
-    // Binding a popup to each layer
-    onEachFeature: function(feature, layer) {
-      layer.bindPopup("<strong>" + feature.properties.NAME + "</strong><br /><br />Estimated employed population with children age 6-17: " +
-        feature.properties.DP03_16E + "<br /><br />Estimated Total Income and Benefits for Families: $" + feature.properties.DP03_75E);
-    }
-  }).addTo(myMap);
+async function getData () {
+  let mygeojson = {"type": "FeatureCollection", "features": []}
+  await fetch(api_url)
+ .then(response => response.json())
+ .then(data => {
+   for(let point of data){
+     let coordinate = [parseFloat(point.lng), parseFloat(point.lat)];
+     let properties = point;
+     delete properties.longitude;
+     delete properties.latitude;          
+     let feature = {"type": "Feature", "geometry": {"type": "Point", "coordinates": coordinate}, "properties": properties}
+     mygeojson.features.push(feature);
+   }
+ })
+ L.geoJson(mygeojson).bindPopup(function (layer) {
+  return layer.feature.properties.crime_rate_per_100000;
+}).addTo(myMap);
+//  console.log(mygeojson);
+}
 
 
+// d3.json(api_url).then(data3 => {
+//   console.log(data3);
+//   L.geoJSON(data3, {
+//     color: "darkblue",
+//     weight: .7
+//   }).addTo(myMap);
+// });
 
 
 let baseMaps = {
@@ -107,6 +92,5 @@ L.control.layers(baseMaps, overlayMap, {
 
 
 
-});
 
 
