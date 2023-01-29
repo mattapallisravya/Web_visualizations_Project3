@@ -1,9 +1,12 @@
 import numpy as np
 import sqlite3
 from flask import Flask, render_template, jsonify
+from flask_cors import CORS, cross_origin
 
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 @app.route("/")
@@ -31,6 +34,7 @@ def index():
 
 
 @app.route('/crime_data')
+@cross_origin()
 def crime_data():
     conn = get_db_connection()
     posts = conn.execute('SELECT * FROM income_crime_latlng').fetchall()
@@ -69,6 +73,8 @@ def crime_data():
 
     # print(posts)
     return jsonify(data)
+
+
 
 
 if __name__ == '__main__':

@@ -1,3 +1,5 @@
+// Store our API endpoint as queryUrl.
+const api_url = "https://web-visualization-project.onrender.com/crime_data";
 // Creating the map object
 let countyLine= L.layerGroup();
 
@@ -17,6 +19,7 @@ let countyGeo = 'https://raw.githubusercontent.com/kjhealy/us-county/master/data
 
 let stateGeo = 'https://raw.githubusercontent.com/kjhealy/us-county/master/data/geojson/gz_2010_us_040_00_500k.json';
 
+
 d3.json(countyGeo).then(data => {
   console.log(data);
   L.geoJSON(data, {
@@ -32,21 +35,9 @@ d3.json(stateGeo).then(data2 => {
     color: "darkblue",
     weight: .7
   }).addTo(stateLine);
-  // stateLine.addTo(myMap);
 });
 
-// d3.json(countyGeo).then(data => {
-//   console.log(data)
-//   L.geoJson(data, {
-//       style:coordinates => {
-//           return {
-//               color:"black",
-//               weight:1.5 
-//           }
-//         }
-//     }).addTo(countyLine);
-//     countyLine.addTo(myMap);
-//     });
+
 
 
 let baseMaps = {
@@ -68,3 +59,24 @@ let myMap = L.map("map", {
 L.control.layers(baseMaps, overlayMap, {
   collapsed: false
 }).addTo(myMap);
+
+
+
+async function getapi(url) {
+    
+  // Storing response
+  const response = await fetch(url);
+  
+  // Storing data in form of JSON
+  var data = await response.json();
+  console.log(data);
+  if (response) {
+      hideloader();
+  }
+  show(data);
+}
+// Calling that async function
+getapi(api_url);
+
+
+
