@@ -16,15 +16,17 @@ function init() {
           // console.log('States:', states)
           console.log(data[i].State);
           let states = (data[i].State);
-        //   states.forEach((states) => {
-        //     dropdownMenu.append('option').text(states).property('value', states);        
+          let dropdownMenu = d3.select('#selDataset');
+          console.log(states);
+          // states.forEach((state) => {
+          dropdownMenu.append('option').text(states).property('value', states);        
         // });
-          // }
+          }
 
-          states.forEach((states) => {
-            dropdownMenu.append('option').text(states).property('value', states);        
-        });
-      }
+        //   states.forEach((states) => {
+        //     dropdownMenu.append('option').text(state).property('value', state);        
+        // });
+      // }
 
     
     // Using the first sample in the list and creating initial charts and data
