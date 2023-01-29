@@ -1,0 +1,31 @@
+from pathlib import Path
+Path('crime_data.db').touch()
+
+import sqlite3
+conn = sqlite3.connect('crime_data.db')
+c = conn.cursor()
+
+c.execute("""
+CREATE TABLE crimes_counties
+(id INTEGER PRIMARY KEY AUTOINCREMENT,
+county_name TEXT,
+state TEXT,
+crime_rate_per_100000 TEXT,
+crime_rate_rank INTEGER,
+murder INTEGER,
+rape INTEGER,
+robbery INTEGER,
+aggravated_assault INTEGER,
+burglary INTEGER,
+larceny INTEGER,
+motor_theft INTEGER,
+arson INTEGER,
+population INTEGER,
+total_violent_crime INTEGER)""")
+
+import pandas as pd
+
+crimes = pd.read_csv('complete_crime_counties.csv')
+crimes.to_sql('crimes', conn, if_exists='append', index = False)
+
+c.execute('''SELECT * FROM crimes''').fetchall()
