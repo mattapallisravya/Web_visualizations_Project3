@@ -2,8 +2,6 @@ import numpy as np
 import sqlite3
 from flask import Flask, render_template, jsonify
 from flask_cors import CORS, cross_origin
-from geojson import Feature, FeatureCollection, Point
-import pandas
 
 
 app = Flask(__name__)
