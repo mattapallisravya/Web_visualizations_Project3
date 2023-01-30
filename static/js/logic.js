@@ -51,10 +51,13 @@ async function getData () {
      delete properties.latitude;          
      let feature = {"type": "Feature", "geometry": {"type": "Point", "coordinates": coordinate}, "properties": properties}
      mygeojson.features.push(feature);
+     //console.log(feature.properties.crime_rate_per_100000)
+     
    }
  })
-  L.geoJson(mygeojson).bindPopup(mygeojson.crime_rate_per_100000).addTo(myMap);
- console.log(mygeojson);
+ L.geoJson(mygeojson).bindPopup(mygeojson.crime_rate_per_100000).addTo(myMap);
+  
+ //console.log(mygeojson);
 }
 
 
