@@ -1,5 +1,5 @@
 // Store our API endpoint as queryUrl.
-const api_url = "https://web-visualization-project.onrender.com/crime_data";
+const api_url = "https://web-visualization-project.onrender.com/project_data";
 getData();
 // Creating the map object
 let countyLine= L.layerGroup();
@@ -32,8 +32,8 @@ d3.json(countyGeo).then(data => {
 d3.json(stateGeo).then(data2 => {
   console.log(data2);
   L.geoJSON(data2, {
-    color: "darkblue",
-    weight: .7
+    color: "red",
+    weight: 5
   }).addTo(stateLine);
 });
 
@@ -53,11 +53,7 @@ async function getData () {
      mygeojson.features.push(feature);
    }
  })
-
-
- L.geoJson(mygeojson).bindPopup(function (layer) {
-  return layer.feature.properties.crime_rate_per_100000;
-}).addTo(myMap);
+  L.geoJson(mygeojson).bindPopup(mygeojson.crime_rate_per_100000).addTo(myMap);
  console.log(mygeojson);
 }
 
@@ -74,7 +70,7 @@ let overlayMap = {
 
 let myMap = L.map("map", {
   center: [37.7749, -100.4194],
-  zoom: 11,
+  zoom: 6,
   layers: [topo, stateLine]
 });
 
