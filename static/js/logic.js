@@ -16,7 +16,17 @@ let countyGeo = 'https://raw.githubusercontent.com/kjhealy/us-county/master/data
 
 let stateGeo = 'https://raw.githubusercontent.com/kjhealy/us-county/master/data/geojson/gz_2010_us_040_00_500k.json';
 
-let api_url = "https://web-visualization-project.onrender.com/crime_data";
+let api_url = "https://web-visualization-project.onrender.com/project_data";
+
+// let crime_data = 
+
+// let geo_data = requests.get(api_url).json()
+
+let myMap = L.map("map", {
+  center: [37.7749, -100.4194],
+  zoom: 3,
+  layers: [topo, stateLine]
+});
 
 d3.json(countyGeo).then(data => {
   console.log(data);
@@ -44,43 +54,79 @@ let overlayMap = {
   'State Line': stateLine,
 };
 
-let myMap = L.map("map", {
-  center: [37.7749, -100.4194],
-  zoom: 3,
-  layers: [topo, stateLine]
-});
+// let myMap = L.map("map", {
+//   center: [37.7749, -100.4194],
+//   zoom: 3,
+//   layers: [topo, stateLine]
+// });
 
 L.control.layers(baseMaps, overlayMap, {
   collapsed: false
 }).addTo(myMap);
 
-// let crimegeo;
+let crimegeo;
 
-d3.json(api_url).then(function(data3) {
-  console.log(data3);
-  console.log(data3[0]);
-  console.log(data3.crime_rate_per_100000)
-  // Create a new choropleth layer.
-  L.choropleth(data3, {
-    // Define which property in the features to use.
-    valueProperty: "crime_rate_per_100000",
-    // Set the color scale.
-    scale: ["#FFFFB2", "#B10026"],
-    // The number of breaks in the step range
-    steps: 10,
-    // q for quartile, e for equidistant, k for k-means
-    mode: "q",
-    style: {
-      // Border color
-      color: "#fff",
-      weight: 1,
-      fillOpacity: 0.8
-    },
-    // Binding a popup to each layer
-    onEachFeature: function(feature, layer) {
-      layer.bindPopup("<strong>County: " + feature.county + "</strong><br/><br/>Crime Rate: " +
-      feature.crime_rate_per_100000 + "<br/><br/>Population" + feature.population_x);
-    }
+// let api = api_url.json();
+
+// d3.json(api_url).then(function(data3) {
+//   console.log(data3);
+//   console.log(data3[0]);
+
+// d3.csv('././final_merged_dataset.csv').then(function (data3) {
+//   console.log(data3.columns);
+//   for (var i = 0; i < data3.length; i++) {
+
+//     let crime_rate = (data3[i].crime_rate_per_100000);
+
+// let url = '././final_merged_dataset.csv';
+
+
+d3.json(api_url).then(response => {
+  let heatArray=[];
+
+
+  response.forEach(location => heatArray.push([location.location.coordinates[1],location.location.coordinates[0]]));
+  
+  let heat = L.heatLayer(heatArray, {
+      radius:20,
+      blur:35
   }).addTo(myMap);
 });
+
+
+  // };
+  // let geodata = (data3.crime_rate_per_100000);
+  // console.log(geodata);
+  // data3.json();
+  // let your_json = url.parse( your_url, true );
+  // for (let i = 0; i < data3.length; i++) {
+
+  //   let crime_rate = (data3[i]);
+    // console.log(crime_rate);
+  // };
+  // Create a new choropleth layer.
+  // crimegeo = L.choropleth(data3, {
+    // Define which property in the features to use.
+    // valueProperty: crime_rate,
+    // valueProperty: (data3[i].crime_rate_per_100000),
+    // Set the color scale.
+    // scale: ["#FFFFB2", "#B10026"],
+    // The number of breaks in the step range
+    // steps: 10,
+    // q for quartile, e for equidistant, k for k-means
+    // mode: "q",
+    // style: {
+      // Border color
+    //   color: "#fff",
+    //   weight: 1,
+    //   fillOpacity: 0.8
+    // },
+    // Binding a popup to each layer
+    // onEachFeature: function(feature, layer) {
+    //   layer.bindPopup("<strong>County: " + feature.county + "</strong><br/><br/>Crime Rate: " +
+    //   feature.crime_rate_per_100000 + "<br/><br/>Population" + feature.population_x);
+    // }
+  // }).addTo(myMap);
+// };
+// });
 
