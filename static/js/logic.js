@@ -15,7 +15,6 @@ let topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
 	attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
 });
 
-// let countyGeo = ('https://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json');
 let countyGeo = 'https://raw.githubusercontent.com/kjhealy/us-county/master/data/geojson/gz_2010_us_050_00_500k.json';
 
 let stateGeo = 'https://raw.githubusercontent.com/kjhealy/us-county/master/data/geojson/gz_2010_us_040_00_500k.json';
@@ -54,20 +53,13 @@ async function getData () {
      mygeojson.features.push(feature);
    }
  })
+
+
  L.geoJson(mygeojson).bindPopup(function (layer) {
   return layer.feature.properties.crime_rate_per_100000;
 }).addTo(myMap);
-//  console.log(mygeojson);
+ console.log(mygeojson);
 }
-
-
-// d3.json(api_url).then(data3 => {
-//   console.log(data3);
-//   L.geoJSON(data3, {
-//     color: "darkblue",
-//     weight: .7
-//   }).addTo(myMap);
-// });
 
 
 let baseMaps = {
