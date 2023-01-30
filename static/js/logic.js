@@ -70,7 +70,7 @@ let overlayMap = {
 
 let myMap = L.map("map", {
   center: [37.7749, -100.4194],
-  zoom: 6,
+  zoom: 8,
   layers: [topo, stateLine]
 });
 
