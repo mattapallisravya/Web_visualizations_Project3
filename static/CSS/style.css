@@ -3,11 +3,11 @@ body {
     margin: 0;
   }
   
-  /* #map,
+  #map,
   body,
   html {
-    height: 25%;
-  } */
+    height: 100%;
+  }
 
 #jumbo {
   background-color: rgb(43, 20, 21);

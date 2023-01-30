@@ -10,18 +10,26 @@ function init() {
           console.log(data);
           console.log(data.columns);
     
-        //     let dropdownMenu = d3.select('#selDataset');
-          // let states = data.columns[0];
           for (var i = 0; i < data.length; i++) {
-          // console.log(data[i].State);
+
           let states = (data[i].State);
-          let dropdownMenu = d3.select('#selDataset');
+          let dropdownMenu = d3.select('#selState');
           console.log(states);
-          // console.log(states[0][0]);
-          // states.forEach((state) => {
           dropdownMenu.append('option').text(states).property('value', states);        
-        // });
           }
+        // });
+
+        // d3.json('./final_merged_dataset.csv').then(function (data2) {
+        //   console.log('Counties:', data2);
+        //   for (var i = 0; i < data2.length; i++) {
+
+        //     let counties = (data2[i].county);
+        //     let dropdownMenu = d3.select('#selCounty');
+        //     console.log(counties);
+        //     dropdownMenu.append('option').text(counties).property('value', counties);
+        //   }
+        // });
+        // });
     
     // Using the first sample in the list and creating initial charts and data
           // let beginState = states[0][0];

@@ -16,26 +16,22 @@ let countyGeo = 'https://raw.githubusercontent.com/kjhealy/us-county/master/data
 
 let stateGeo = 'https://raw.githubusercontent.com/kjhealy/us-county/master/data/geojson/gz_2010_us_040_00_500k.json';
 
-const api_url = "https://web-visualization-project.onrender.com/crime_data";
-
-
+let api_url = "https://web-visualization-project.onrender.com/crime_data";
 
 d3.json(countyGeo).then(data => {
   console.log(data);
   L.geoJSON(data, {
     color: "black",
-    weight: 1
-  }).addTo(countyLine);
-  // countyLine.addTo(myMap);
+    weight: .7
+  }).addTo(countyLine)
 });
 
 d3.json(stateGeo).then(data2 => {
   console.log(data2);
   L.geoJSON(data2, {
-    color: "darkblue",
-    weight: .7
-  }).addTo(stateLine);
-  // stateLine.addTo(myMap);
+    color: "white",
+    weight: 4
+  }).addTo(stateLine)
 });
 
 let baseMaps = {
@@ -58,10 +54,14 @@ L.control.layers(baseMaps, overlayMap, {
   collapsed: false
 }).addTo(myMap);
 
+// let crimegeo;
+
 d3.json(api_url).then(function(data3) {
-  console.log(api_url)
+  console.log(data3);
+  console.log(data3[0]);
+  console.log(data3.crime_rate_per_100000)
   // Create a new choropleth layer.
-  geojson = L.choropleth(data3, {
+  L.choropleth(data3, {
     // Define which property in the features to use.
     valueProperty: "crime_rate_per_100000",
     // Set the color scale.
@@ -78,8 +78,8 @@ d3.json(api_url).then(function(data3) {
     },
     // Binding a popup to each layer
     onEachFeature: function(feature, layer) {
-      layer.bindPopup("<strong>" + county + "</strong><br /><br />Estimated employed population with children age 6-17: " +
-      crime_rate_per_100000 + "<br /><br />Estimated Total Income and Benefits for Families: $" + population_x);
+      layer.bindPopup("<strong>County: " + feature.county + "</strong><br/><br/>Crime Rate: " +
+      feature.crime_rate_per_100000 + "<br/><br/>Population" + feature.population_x);
     }
   }).addTo(myMap);
 });
