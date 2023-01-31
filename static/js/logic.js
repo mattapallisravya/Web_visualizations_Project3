@@ -55,7 +55,7 @@ async function getData () {
      
    }
  })
- L.geoJson(mygeojson).bindPopup(mygeojson.crime_rate_per_100000).addTo(myMap);
+ L.geoJson(mygeojson).addTo(myMap);
   
  //console.log(mygeojson);
 }
