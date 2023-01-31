@@ -1,111 +1,93 @@
-// <block:actions:2>
-const actions = [
-  {
-    name: 'Randomize',
-    handler(chart) {
-      chart.data.datasets.forEach(dataset => {
-        dataset.data = Utils.numbers({count: chart.data.labels.length, min: 0, max: 100});
-      });
-      chart.update();
-    }
-  },
-  {
-    name: 'Add Dataset',
-    handler(chart) {
-      const data = chart.data;
-      const dsColor = Utils.namedColor(chart.data.datasets.length);
-      const newDataset = {
-        label: 'Dataset ' + (data.datasets.length + 1),
-        backgroundColor: Utils.transparentize(dsColor, 0.5),
-        borderColor: dsColor,
-        data: Utils.numbers({count: data.labels.length, min: 0, max: 100}),
+d3.csv("final_merged_dataset.csv", function(data){
+  console.log('Promise: ', data)
+});
+
+function createGraphs(state) {
+  // Plotly.d3.csv("final_merged_dataset.csv", function(data){
+  //   console.log('Promise: ', data);
+    var states = Array.from(new Set(data.map(row => row.state)));
+    // var traces = [];
+    // states.forEach(function(state){
+
+        var filteredData = data.filter(row => row.state_name == state);
+        var murder = filteredData.map(row => row.murder).sum();
+        var robbery = filteredData.map(row => row.robbery).sum();
+        var rape = filteredData.map(row => row.rape).sum();
+        var assault = filteredData.map(row => row.aggravated_assault).sum();
+        var burglary = filteredData.map(row => row.burglary).sum();
+        var larceny = filteredData.map(row => row.larceny).sum();
+        var grand_theft = filteredData.map(row => row.motor_theft).sum();
+        var arson = filteredData.map(row => row.arson).sum();
+        var y = 16000
+        var trace = {
+          x: x,
+          y: y,
+          // mode: 'markers',
+          // type: 'scatter',
+          name: state
       };
-      chart.data.datasets.push(newDataset);
-      chart.update();
+    // });
+  // });
+    function optionChanged (sampleX) {
+      // const line = document.getElementById('line');
+      // const bar = document.getElementById('bar');
+      // const pie = document.getElementById('pie');
+      changeline(sampleX);
+      changebar(sampleX);
+      changepie(sampleX)
     }
-  },
-  {
-    name: 'Add Data',
-    handler(chart) {
-      const data = chart.data;
-      if (data.datasets.length > 0) {
-        data.labels = Utils.months({count: data.labels.length + 1});
+    // });
 
-        for (let index = 0; index < data.datasets.length; ++index) {
-          data.datasets[index].data.push(Utils.rand(0, 100));
-        }
+    line.addEventListener('click', changeline);
+    bar.addEventListener('click', changebar);
+    pie.addEventListener('click', changepie);
 
-        chart.update();
-      }
-    }
-  },
-  {
-    name: 'Remove Dataset',
-    handler(chart) {
-      chart.data.datasets.pop();
-      chart.update();
-    }
-  },
-  {
-    name: 'Remove Data',
-    handler(chart) {
-      chart.data.labels.splice(-1, 1); // remove the label first
+  // let geoData = '';
+    // });
 
-      chart.data.datasets.forEach(dataset => {
-        dataset.data.pop();
-      });
-
-      chart.update();
-    }
-  }
-];
-// </block:actions>
-
-// <block:setup:1>
-const DATA_COUNT = 7;
-const NUMBER_CFG = {count: DATA_COUNT, min: 0, max: 100};
-
-const labels = Utils.months({count: 7});
-const data = {
-  labels: labels,
-  datasets: [
-    {
-      label: 'Dataset 1',
-      data: Utils.numbers(NUMBER_CFG),
-      borderColor: Utils.CHART_COLORS.red,
-      backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
+    const ctx = document.getElementById('myChart');
+    const myChart = new myChart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['MURDER', 'RAPE', 'ROBBERY', 'ASSULT', 'BURGLARY', 'LARCENY', 'MVTHEFT', 'ARSON',],
+        datasets: [{
+          label: 'Crime Rate',
+          data: [murder, rape, robbery, assault, burglary, larceny, grand_theft, arson],
+          backgroundColor: ['black', 'red', 'blue', 'green', 'lightblue', 'yellow', 'lightgreen', 'grey',],
+          borderWidth: 15
+      }]
+    // });
     },
-    {
-      label: 'Dataset 2',
-      data: Utils.numbers(NUMBER_CFG),
-      borderColor: Utils.CHART_COLORS.blue,
-      backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5),
-    }
-  ]
-};
-// </block:setup>
-
-// <block:config:0>
-const config = {
-  type: 'radar',
-  data: data,
-  options: {
-    responsive: true,
-    plugins: {
-      title: {
-        display: true,
-        text: 'Chart.js Radar Chart'
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+        }
       }
     }
-  },
+  });
+  };
+
+function changeline(){
+
+    const updatetype = 'line';
+    myChart.config.type = updatetype;
+    myChart.update();
+    const barColors = [
+]
 };
-// </block:config>
 
-module.exports = {
-  actions: actions,
-  config: config,
+function changebar(){
+
+    const updatetype = 'bar';
+    myChart.config.type = updatetype;
+    myChart.update();
 };
 
-  
+function changepie(){
 
-
+  const updatetype = 'pie';
+  myChart.config.type = updatetype;
+  myChart.update();
+};
+// Plotly.newPlot('plots1', traces, layout, {responsive: true});
